@@ -18,7 +18,7 @@ import com.example.chatapplication.ui.theme.ChatApplicationTheme
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
-    private lateinit  var userRecyclerview:RecyclerView
+    private lateinit  var UserRecyclerview:RecyclerView
     private lateinit var listUsers:ArrayList<User>
     private lateinit var adapter: UserAdapter
     private lateinit var mAuth:FirebaseAuth
