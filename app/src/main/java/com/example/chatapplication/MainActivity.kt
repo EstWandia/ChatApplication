@@ -1,6 +1,8 @@
 package com.example.chatapplication
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,39 +13,39 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapplication.ui.theme.ChatApplicationTheme
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
+    private lateinit  var userRecyclerview:RecyclerView
+    private lateinit var listUsers:ArrayList<User>
+    private lateinit var adapter: UserAdapter
+    private lateinit var mAuth:FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
+        setContentView(R.layout.activity_main)
 
-            ChatApplicationTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+
+        mAuth=FirebaseAuth.getInstance()
+        listUsers=ArrayList()
+        adapter=UserAdapter(this,listUsers)
+
 
         }
-    }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ChatApplicationTheme {
-        Greeting("Android")
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu,menu)
+        return super.onCreateOptionsMenu(menu)
     }
-}
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId==R.id.logout){
+            //logout logic
+            mAuth.signOut()
+            finish()
+            return true
+        }
+        return true
+    }
+    }
